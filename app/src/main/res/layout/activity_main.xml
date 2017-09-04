@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".camera.views.MainActivity">
+
+    <com.merrors.merror.mvp.ui.widget.ModifaceView
+        android:id="@+id/main_makeup_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:id="@+id/split_line"
+        android:layout_width="1dip"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:background="#FF000000"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/flip_camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FLIP CAMERA"
+        android:onClick="flipCameraClicked"/>
+
+    <Button
+        android:id="@+id/before_photo_button"
+        android:layout_below="@id/flip_camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BEFORE PHOTO"
+        android:onClick="captureBeforeClicked"/>
+
+    <Button
+        android:id="@+id/after_photo_button"
+        android:layout_below="@id/before_photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AFTER PHOTO"
+        android:onClick="captureAfterClicked"/>
+
+    <Button
+        android:id="@+id/compare_button"
+        android:layout_below="@id/after_photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="COMPARE"
+        android:onClick="compareBeforeAfterClicked"/>
+
+    <ImageView
+        android:id="@+id/picture_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:layout_margin="50dp"/>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontal_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_inside_scroll_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Lip"
+                android:onClick="lipClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Smoothing"
+                android:onClick="foundationClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Eyeliner"
+                android:onClick="eyelinerClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Lash"
+                android:onClick="lashClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Eyeshadow Lid"
+                android:onClick="eyeshadowLidClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Eyeshadow Crease"
+                android:onClick="eyeshadowCreaseClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Eyeshadow High"
+                android:onClick="eyeshadowHighClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Blush"
+                android:onClick="blushClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Brow"
+                android:onClick="browClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Lip Liner"
+                android:onClick="liplinerClicked"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/menu_back_white_rounded"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/makeup_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_above="@id/horizontal_scroll_view"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/menu_back_white_rounded">
+
+        <com.merrors.merror.mvp.ui.widget.CircleWidthView
+            android:id="@+id/makeup_container_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="#ff0000"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+            <TextView
+                android:id="@+id/seek_bar_one_label"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/seek_bar_two_label"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/seek_bar_three_label"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+            <SeekBar
+                android:id="@+id/seek_bar_one"
+                android:max="100"
+                android:progress="100"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <SeekBar
+                android:id="@+id/seek_bar_two"
+                android:max="100"
+                android:progress="100"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <SeekBar
+                android:id="@+id/seek_bar_three"
+                android:max="100"
+                android:progress="100"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <TextView
+                android:id="@+id/toggle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:text="Toggle Style"
+                android:background="@drawable/menu_back_grey_rounded"/>
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="X"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#000000"
+            android:gravity="top"
+            android:onClick="makeupContainerExitClicked"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/color_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_above="@id/makeup_container"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:background="@drawable/menu_back_white_rounded" />
+
+</RelativeLayout>

@@ -1,0 +1,41 @@
+{
+    "left_eye_nocontour": "cur_leye.dat",
+    "right_eye_nocontour": "cur_reye.dat",
+    "lips_nocontour": "cur_lips_color.dat",
+    "face_nocontour": "cur_face.dat",
+    "cluster_face_nocontour": "cluster_centers_100_new.dat",
+    "cluster_lips_nocontour": "cluster_centers_lips_20.dat",
+    "face_pca_nocontour": "PCA.txt",
+    
+    "lips_web_nocontour": "SparseHelenPointsNoContourLips_TrainedUsingHybridModel_lambda0.03_nearbyfeaturepool2_moredata_histeq_fixed_no_rotated_new_sampling4_200trees_pool500_20splits_padding0.1_ver6.dat",
+    "face_web_nocontour": "SparseHelenPointsNoContour_nearbyfeaturepool2_lambda0.05_moredata_histeq_fixed_no_rotated_new_sampling4_200trees_pool500_20splits_padding0.2_ver6.dat",
+    "cluster_face_web_nocontour": "cluster_centers_10_new.dat",
+    
+    "left_eye_small_nocontour": "cur_leye_small.dat",
+    "right_eye_small_nocontour": "cur_reye_small.dat",
+    "face_small_nocontour": "cur_face_small.dat",
+    "lips_small_nocontour": "cur_lips_small.dat",
+	
+	"left_eye_full": "cur_leye.dat",
+    "right_eye_full": "cur_reye.dat",
+    "lips_full": "cur_lips.dat",
+    "face_full": "SparseHelenPoints.dat",
+    "cluster_face_full": "",
+    "cluster_lips_full": "",
+    "face_pca_full": "SparseHelenPoints_PCA.txt",
+    
+    "lips_web_full": "",
+    "face_web_full": "",
+    "cluster_face_web_full": "",
+    
+    "iris_regressor_full": "joint_iris_ModiFaceManual_hog_10cascades_200trees_subpix_96descriptor_pairwise_t05_restricted_opencv_resize.dat",
+    "iris_filters_full": "iris_detection_filters.dat",
+    
+    "left_eye_small_full": "",
+    "right_eye_small_full": "",
+    "face_small_full": "",
+    "lips_small_full": "",
+	
+	"iris_regressor": "joint_iris_ModiFaceManual_hog_10cascades_200trees_subpix_96descriptor_pairwise_t05_restricted_opencv_resize.dat",
+    "iris_filters": "iris_detection_filters.dat"
+}

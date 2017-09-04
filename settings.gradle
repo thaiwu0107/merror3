@@ -1,0 +1,2 @@
+include ':app', ':arm'
+project(':arm').projectDir = new File('arms')

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.merrors.merror"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false"/>
+
+    <!-- Open GL 2.0 ES is required -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+    <application
+        android:name="com.jess.arms.base.BaseApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".camera.views.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".camera.views.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".mvp.ui.activity.UserActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <!--
+       autolayout meta
+       配置设计图的宽高,配合AutoLauout控件使用,在设计图尺寸以外的其它尺寸手机上,也能达到和设计图一样的效果
+       注意: 本框架并不强制你使用 AutoLayout,如果你不想使用 AutoLayout,就不要配置下面的 meta-data
+        -->
+        <!--<meta-data-->
+            <!--android:name="design_width"-->
+            <!--android:value="1080"/>-->
+        <!--<meta-data-->
+            <!--android:name="design_height"-->
+            <!--android:value="1920"/>-->
+
+        <!-- arms配置 -->
+        <meta-data
+            android:name="com.merrors.merror.app.GlobalConfiguration"
+            android:value="ConfigModule"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths"/>
+        </provider>
+
+        <activity android:name=".mvp.model.oauth.InterceptorsActivity">
+        </activity>
+        <activity android:name=".mvp.model.oauth.HostActivityFragment">
+        </activity>
+        <activity android:name=".mvp.model.oauth.ConnectionsActivity">
+        </activity>
+        <activity android:name=".mvp.model.oauth.ChooseActivityOrFragment">
+        </activity>
+        <activity android:name=".mvp.ui.activity.StartActivity">
+        </activity>
+        <activity android:name=".mvp.ui.activity.ContainActivity">
+        </activity>
+    </application>
+
+</manifest>
