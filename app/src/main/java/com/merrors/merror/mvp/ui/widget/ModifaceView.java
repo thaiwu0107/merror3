@@ -38,8 +38,6 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
     // Camera class that handles all the camera initialization and destruction
     AndroidCamera mCamera = new AndroidCamera();
 
-    private boolean isStaticMode = false;
-
     public ModifaceView(Context context) {
         super(context);
         init();
@@ -62,9 +60,10 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
         startCamera(true);
     }
 
-    public void startCamera(boolean useFrontFacingCamera) {
+    public void startCamera(final boolean useFrontFacingCamera) {
+        mRenderer.clearBitmap();
         usingFrontFacingCamera = useFrontFacingCamera;
-        mCamera.start(getContext(), useFrontFacingCamera, false, this, this, this);
+        mCamera.start(getContext(), useFrontFacingCamera, false, ModifaceView.this, ModifaceView.this, ModifaceView.this);
     }
 
     private void stopCamera() {
@@ -112,6 +111,7 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
 
     public void toggleSplitCompare() {
         mRenderer.toggleSplitCompare();
+        requestRender();
     }
 
     public interface CaptureBeforePhotoListener {
@@ -251,6 +251,13 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
         super.onPause();
     }
 
+    //todo 這裡可以輸入需要的特定的圖案
+    public void startStatic(Bitmap bitmap) {
+        mCamera.stopCamera();
+        mRenderer.updateFrameWithBitmap(bitmap);
+        requestRender();
+    }
+
     @Override
     public void onResume(){
 
@@ -265,7 +272,7 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
 
         // start camera if we can
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || MainActivity.isAllPermissionsGranted(getContext())) {
-            /*if (!isStaticMode)*/ startCamera();
+            if (mRenderer.getBitmap() == null) startCamera();
         }
     }
 
@@ -373,9 +380,16 @@ public class ModifaceView extends GLSurfaceView implements Camera.ErrorCallback,
 
 
     public void captureBeforeBitmap(CaptureBeforePhotoListener captureBeforePhotoListener) {
-        this.captureBeforePhotoListener = captureBeforePhotoListener;
+        Bitmap staticBitmap = mRenderer.getBitmap();
+        if (staticBitmap != null) {
+            captureBeforePhotoListener.captureBeforePhoto(staticBitmap);
+        } else {
+            this.captureBeforePhotoListener = captureBeforePhotoListener;
+            requestRender();
+        }
     }
     public void captureAfterBitmap(ExampleRenderer.CaptureAfterPhotoListener captureListener) {
         mRenderer.setCaptureAfterPhotoListener(captureListener);
+        requestRender();
     }
 }

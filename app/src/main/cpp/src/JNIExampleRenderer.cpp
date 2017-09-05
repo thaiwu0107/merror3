@@ -185,7 +185,7 @@ static void JNICALL jniConvertCameraFrame(PARAMS,
 }
 
 static void JNICALL jniRenderFrame(PARAMS, jint frameWidth, jint frameHeight, jbyteArray frameData,
-                                            jint displayWidth, jint displayHeight) {
+                                   jint displayWidth, jint displayHeight) {
 
     jbyte *pFrameData = env->GetByteArrayElements(frameData, 0);
 
@@ -404,7 +404,7 @@ static void JNICALL jniRenderFrame(PARAMS, jint frameWidth, jint frameHeight, jb
             float vertexOffsetX = 2 * offsetX / displayWidth;
             float vertexOffsetY = 2 * offsetY / displayHeight;
 
-            static const GLfloat vertices[] = {
+            GLfloat vertices[] = {
                     -1.0f + vertexOffsetX, -1.0f + vertexOffsetY,
                     1.0f - vertexOffsetX, -1.0f + vertexOffsetY,
                     -1.0f + vertexOffsetX,  1.0f - vertexOffsetY,

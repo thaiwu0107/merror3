@@ -2,6 +2,8 @@ package com.merrors.merror;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
@@ -10,6 +12,7 @@ import com.merrors.merror.app.utils.CameraOrientation;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -257,6 +260,10 @@ public class ExampleRenderer implements GLSurfaceView.Renderer {
 
     CaptureAfterPhotoListener captureAfterPhotoListener;
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
     public interface CaptureAfterPhotoListener {
         public void captureAfterPhoto(Bitmap bitmap);
     }
@@ -292,12 +299,14 @@ public class ExampleRenderer implements GLSurfaceView.Renderer {
             else {
                 if(mCurrentFrameData != null && mCurrentFrameWidth > 0 && mCurrentFrameHeight > 0) {
 
-                    jniRenderFrame(mCurrentFrameWidth, mCurrentFrameHeight, mCurrentFrameData, mOutputWidth, mOutputHeight);
+                    jniRenderFrame(mCurrentFrameWidth, mCurrentFrameHeight, mCurrentFrameData.clone(), mOutputWidth, mOutputHeight);
 
-                    // reset the frame so we don't draw the same frame over and over again
-                    mCurrentFrameData = null;
-                    mCurrentFrameWidth = 0;
-                    mCurrentFrameHeight = 0;
+                    if (bitmap == null) {
+                        // reset the frame so we don't draw the same frame over and over again
+                        mCurrentFrameData = null;
+                        mCurrentFrameWidth = 0;
+                        mCurrentFrameHeight = 0;
+                    }
                 }
 
             }
@@ -350,9 +359,12 @@ public class ExampleRenderer implements GLSurfaceView.Renderer {
     }
 
     public void updateFrameWithCameraFrame(final int width, final int height, byte[] data, final CameraOrientation cameraOrientation) {
+        if (bitmap != null) {
+            return;
+        }
         final byte[] dataCopy = data.clone();
         postOnDrawStart(()->{
-            if(mNativeRendererData != 0) {
+            if(mNativeRendererData != 0 && bitmap == null) {
                 if(mCurrentFrameData == null || mCurrentFrameData.length != width * height * 3) {
                     mCurrentFrameData = new byte[width * height * 3];
                 }
@@ -364,6 +376,85 @@ public class ExampleRenderer implements GLSurfaceView.Renderer {
                 jniConvertCameraFrame(width, height, dataCopy, cameraOrientation.getId(), mCurrentFrameData);
             }
         });
+    }
+
+    Bitmap bitmap;
+
+    public Bitmap scaleCenterCrop(Bitmap source, int newWidth, int newHeight) {
+        int sourceWidth = source.getWidth();
+        int sourceHeight = source.getHeight();
+
+        // Compute the scaling factors to fit the new height and width, respectively.
+        // To cover the final image, the final scaling will be the bigger
+        // of these two.
+        float xScale = (float) newWidth / sourceWidth;
+        float yScale = (float) newHeight / sourceHeight;
+        float scale = Math.max(xScale, yScale);
+
+        // Now get the size of the source bitmap when scaled
+        float scaledWidth = scale * sourceWidth;
+        float scaledHeight = scale * sourceHeight;
+
+        // Let's find out the upper left coordinates if the scaled bitmap
+        // should be centered in the new size give by the parameters
+        float left = (newWidth - scaledWidth) / 2;
+        float top = (newHeight - scaledHeight) / 2;
+
+        // The target rectangle for the new, scaled version of the source bitmap will now
+        // be
+        RectF targetRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
+
+        // Finally, we create a new bitmap of the specified size and draw our new,
+        // scaled bitmap onto it.
+        Bitmap dest = Bitmap.createBitmap(newWidth, newHeight, source.getConfig());
+        Canvas canvas = new Canvas(dest);
+        canvas.drawBitmap(source, null, targetRect, null);
+
+        return dest;
+    }
+
+    public void updateFrameWithBitmap(Bitmap unresizedBitmap) {
+        this.bitmap = scaleCenterCrop(unresizedBitmap,mOutputWidth,mOutputHeight);
+        postOnDrawStart(()->{
+            if (bitmap != null) {
+                if (mNativeRendererData != 0) {
+
+                    if (mCurrentFrameData == null || mCurrentFrameData.length != bitmap.getWidth() * bitmap.getHeight() * 3) {
+                        mCurrentFrameData = new byte[bitmap.getWidth() * bitmap.getHeight() * 3];
+                    }
+
+                    mCurrentFrameWidth = bitmap.getWidth();
+                    mCurrentFrameHeight = bitmap.getHeight();
+
+                    int bytes = bitmap.getByteCount();
+                    ByteBuffer buffer = ByteBuffer.allocate(bytes);
+                    bitmap.copyPixelsToBuffer(buffer);
+                    byte[] bufArray = buffer.array();
+
+                    int j = 0;
+                    for (int i = 0; i < bufArray.length; i += 4) {
+                        mCurrentFrameData[j + 0] = bufArray[i + 0];
+                        mCurrentFrameData[j + 1] = bufArray[i + 1];
+                        mCurrentFrameData[j + 2] = bufArray[i + 2];
+                        j += 3;
+                    }
+                }
+            }
+        });
+    }
+
+    public void clearBitmap() {
+        if (bitmap != null) {
+            this.postOnDrawEnd(()->{
+                bitmap = null;
+                mCurrentFrameData = null;
+                mCurrentFrameWidth = 0;
+                mCurrentFrameHeight = 0;
+                jniDestroyRenderer();
+                jniDestroy();
+                mNativeRendererData = 0;
+            });
+        }
     }
 
     /**

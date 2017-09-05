@@ -22,7 +22,17 @@ LookGenerator::LookGenerator(std::string assetPath) {
 
 MFE::MakeupLook LookGenerator::generateMakeupLook(const AppliedMakeup &appliedMakeup) {
     MFE::MakeupLook look;
-    
+
+    //todo 自己客製化的範例 需要新增很多臉部位子判斷等等  etc....以後再說了
+//    DemoOverlayMaskPtr overlayMask = std::make_shared<DemoOverlayMask>();
+//    MFE::MakeupActionDrawOverlayPtr drawOverlay = std::make_shared<MFE::MakeupActionDrawOverlay>();
+//    drawOverlay->mask = overlayMask;
+//    drawOverlay->overlayImagePath = pathForResource("/Overlay/demo_overlay.png");
+//    MFE::MakeupProcedureOverlayPtr overlay = std::make_shared<MFE::MakeupProcedureOverlay>();
+//    overlay->name = "Overlay";
+//    overlay->actions.push_back(drawOverlay);
+//    look.procedures.push_back(overlay);
+
     if (appliedMakeup.foundation) {
         MFE::MakeupProcedurePtr foundation = createFoundationProcedure(appliedMakeup.foundation.product);
         look.procedures.push_back(foundation);
